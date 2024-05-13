@@ -1,41 +1,21 @@
-import requests
 from bs4 import BeautifulSoup
+from read_webpage import reading_webpage
 
-def scrape_website(tin):
-    url = f"https://example.com/{tin}"  # Replace "example.com" with the actual website URL
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
-        
-        # Now you need to inspect the HTML structure of the website to identify the elements containing the information you need.
-        # You can use the find() or find_all() methods of BeautifulSoup to extract data from specific HTML elements.
+content = reading_webpage("0041038077")
 
-        # Example:
-        # info_div = soup.find('div', class_='info')
-        # info = info_div.text.strip()
+soup = BeautifulSoup(content, 'lxml')
 
-        # Replace 'div' and 'class_' with the actual HTML tag and class of the element containing the information.
+# Find the specific div tag
+div_tag = soup.find('div', {'class': 'flex flex-col items-start'})
 
-        # Once you've identified the elements, extract the data and return it.
-        # You can return the data as a dictionary, list, or any other suitable data structure.
-
-        # Example:
-        # return {
-        #     'info': info
-        # }
-
-        return soup  # For demonstration, returning the BeautifulSoup object
-
+# Check if the div tag was found
+if div_tag:
+    # Extract the text from the span tag inside the div
+    span_tag = div_tag.find('span')
+    if span_tag:
+        business_name = span_tag.text.strip()
+        print(business_name)
     else:
-        print(f"Failed to retrieve data for TIN: {tin}. Status code:", response.status_code)
-        return None
-
-# List of TIN numbers
-tin_numbers = ["1234567890", "9876543210", "5555555555"]  # Add your TIN numbers here
-
-# Iterate through each TIN number and scrape the website
-for tin_number in tin_numbers:
-    data = scrape_website(tin_number)
-    if data:
-        print(f"Scraped data for TIN {tin_number}:", data)
+        print("Could not find the span tag inside the div.")
+else:
+    print("Could not find the div tag with the specified class name.")
