@@ -3,7 +3,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 import ssl
 
-def reading_webpage(tin_number=""):
+def reading_webpage(tin_number="0041038077"):
     """
     This function will be responsible to read the webpage and it will 
     tin_number : a 10 digit number that is called a tin number eg: 0041038077
@@ -25,7 +25,8 @@ def reading_webpage(tin_number=""):
     session.mount('https://', CustomHTTPAdapter())
 
     # Make the request
-    url = 'https://etrade.gov.et/business-license-checker?tin={tin_number}'
+    url = f'https://etrade.gov.et/business-license-checker?tin={tin_number}'
+    print(url)
     response = session.get(url, stream=True)
 
     # Check the response
@@ -35,6 +36,10 @@ def reading_webpage(tin_number=""):
         for chunk in response.iter_content(chunk_size=1024):
             if chunk:
                 content += chunk.decode('utf-8', errors='ignore')
+            print(content)
         return content
+    
     else:
         return "Request failed with status code:", {response.status_code}
+    
+reading_webpage()

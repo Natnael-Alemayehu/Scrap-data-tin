@@ -1,9 +1,14 @@
 from bs4 import BeautifulSoup
-from read_webpage import reading_webpage
+# from read_webpage import reading_webpage
+from web_reader import page_reader
 
-content = reading_webpage("0041038077")
+content = page_reader("0041038077")
 
 soup = BeautifulSoup(content, 'lxml')
+
+with open('content.txt', 'w') as file:
+    file.write(content)
+
 
 # Find the specific div tag
 div_tag = soup.find('div', {'class': 'flex flex-col items-start'})
