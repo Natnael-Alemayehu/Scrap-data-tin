@@ -67,11 +67,8 @@ def person_position_name_and_image():
         image_link = div_tags.find(class_="sepia-0 w-28 h-28 bg-gray-300 rounded-md shadow mb-4 shrink-0 p-1").get('src')
         person_name_amharic = div_tags.find('h1').text
         person_name_english = div_tags.find('p').text
-        print(image_link)
-        print(person_name_amharic)
-        print(person_name_english)
     else:
         print("can't find span tag")
+    
     person_position = soup.find('p', class_="text-md text-gray-700 uppercase font-bold tracking-wider mb-2").text
-    print(person_position)
-print(other_info())
+    return image_link, person_name_amharic, person_name_english, person_position
