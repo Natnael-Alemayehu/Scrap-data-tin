@@ -15,6 +15,7 @@ def page_reader(tin=""):
     chrome_options.add_argument('--headless')  # Run Chrome in headless mode, i.e., without a GUI
     chrome_options.add_argument('--no-sandbox')  # Bypass OS security model
     chrome_options.add_argument('--disable-dev-shm-usage')  # Disable /dev/shm usage
+    chrome_options.add_argument('--lang=en-US,en') # Set language preference to English
 
     # Set up ChromeDriver service
     service = Service(chrome_driver_path)
